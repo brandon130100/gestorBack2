@@ -254,13 +254,13 @@ public class TareaService implements TareaRepository {
     //     }
     // }
 
-    // nuevo metodo
-    public List<Tarea> filtrarTareas(Long prioridadId, Long responsableId, Long estadoId, Long proyectoId, LocalDate fechaCierre) {
-        return tareaRepository.findAll(getSpecifications(prioridadId, responsableId, estadoId, proyectoId, fechaCierre));
+    // metodo para filtrar las tareas
+    public List<Tarea> filtrarTareas(Long prioridadId, Long responsableId, Long estadoId, Long proyectoId, LocalDate fechaCierre, LocalDate fechaRegistro) {
+        return tareaRepository.findAll(getSpecifications(prioridadId, responsableId, estadoId, proyectoId, fechaCierre, fechaRegistro));
     }
 
-    //nuevo metodo
-    private Specification<Tarea> getSpecifications(Long prioridadId, Long responsableId, Long estadoId, Long proyectoId, LocalDate fechaCierre) {
+    // Specification
+    private Specification<Tarea> getSpecifications(Long prioridadId, Long responsableId, Long estadoId, Long proyectoId, LocalDate fechaCierre, LocalDate fechaRegistro) {
         return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
@@ -278,6 +278,9 @@ public class TareaService implements TareaRepository {
             }
             if (fechaCierre != null) {
                 predicates.add(criteriaBuilder.equal(root.get("fechaCierre"), fechaCierre));
+            }
+            if (fechaRegistro != null) {
+                predicates.add(criteriaBuilder.equal(root.get("fechaRegistro"), fechaRegistro));
             }
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));

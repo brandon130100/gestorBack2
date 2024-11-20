@@ -1,5 +1,6 @@
 package com.brandon.tareas.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,10 +23,10 @@ public class Responsable {
 
     private String celular;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Departamento departamento;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Puesto puesto;
 
     public Responsable() {
